@@ -1,0 +1,10 @@
+<div class="navi">
+    <ul>
+        <li class="active"><a href="/dashboard"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="/add_user_page"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Add User</span></a></li>
+        {% endif %}
+        <li><a href="/all_products"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Products</span></a></li>
+        <li><a href="/get/all_reviews"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Reviews</span></a></li>
+    </ul>
+</div>

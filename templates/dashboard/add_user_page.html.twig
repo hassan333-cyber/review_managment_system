@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add User{% endblock %}
+
+{% block body %}
+    <div class="container-fluid display-table">
+        <div class="row display-table-row">
+            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+                <div class="logo">
+                    <h1 style="color: white;">RMS</h1>
+                </div>
+                {% include 'dashboard/includes/sidebar.html.twig' %}
+            </div>
+            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+                <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+                <div class="row">
+                    {% include 'dashboard/includes/header.html.twig' %}
+                </div>
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div style="text-align: center; color: green; font-size: x-large; background: burlywood;" class="flash-notice">{{ flashMessage }}</div>
+                {% endfor %}
+                <div class="user-dashboard">
+                    <h1>Register New User</h1>
+                    <div class="row">
+                        <form id="formId" action="/create_user" method="POST">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" name="email" id="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <input type="hidden" id="userID" name="userID">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary update">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <h4 style="background: #7a8fbd; padding: 19px;">No. of users</h4>
+                <table id="myTable" class="display nowrap" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>ID no.</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td class="nr">{{ user.id }}</td>
+                        <td class="er">{{ user.email }}</td>
+                        <td>********</td>
+                        <td>
+                            <button type="button" class="use-address" ><i class="fas fa-edit use-address"></i></button> |
+                            <a href="/delete_user_info/{{ user.id }}"><button><i class="fas fa-trash-alt"></i></button></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>Sr#</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% block included_content %}
+        <script>
+            $(".use-address").click(function() {
+                var $row = $(this).closest("tr");    // Find the row
+                var $userId = $row.find(".nr").text(); // Find the text
+                var $email = $row.find(".er").text();
+                // test it
+                console.log($userId);
+            // set values
+                $("#email").val($email);
+                $("#userID").val($userId);
+            // Change form action & button text
+                $('#formId').attr('action', '/update_user_info');
+                $(".update").text("Update");
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

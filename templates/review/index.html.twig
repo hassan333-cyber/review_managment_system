@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReviewController!{% endblock %}
+
+{% block body %}
+    <div class="container-fluid display-table">
+        <div class="row display-table-row">
+            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+                <div class="logo">
+                    <h1 style="color: white;">RMS</h1>
+                </div>
+                {% include 'dashboard/includes/sidebar.html.twig' %}
+            </div>
+            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+                <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+                <div class="row">
+                    {% include 'dashboard/includes/header.html.twig' %}
+                </div>
+                <div class="user-dashboard">
+                    <h1>Your Reviews on product</h1>
+                    <div class="row">
+                        <table id="myReviews" class="display nowrap" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Description</th>
+                                <th>Rating</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for review in reviews %}
+                                <tr>
+                                    <td class="nr">{{ review.name }}</td>
+                                    <td class="er">{{ review.description }}</td>
+                                    <td>
+                                        {% for i in 1..review.rating %}
+                                            <span class="fa fa-star" style="color: orange;"></span>
+                                        {% endfor %}
+                                        </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Description</th>
+                                <th>Rating</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      {% block product_review %}
+          <script>
+              // for datatable
+              $('#myReviews').dataTable( {
+                  "pageLength": 5
+              } );
+          </script>
+      {% endblock %}
+{% endblock %}
