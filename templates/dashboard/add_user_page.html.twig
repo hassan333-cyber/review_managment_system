@@ -22,7 +22,7 @@
                 <div class="user-dashboard">
                     <h1>Register New User</h1>
                     <div class="row">
-                        <form id="formId" action="/create_user" method="POST">
+                        <form id="formId">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
                                 <input type="email" name="email" id="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
@@ -31,9 +31,9 @@
                             <input type="hidden" id="userID" name="userID">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
-                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                                <input type="password" id="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
                             </div>
-                            <button type="submit" class="btn btn-primary update">Submit</button>
+                            <button type="button" onclick="createUser();" class="btn btn-primary update">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                         <td>********</td>
                         <td>
                             <button type="button" class="use-address" ><i class="fas fa-edit use-address"></i></button> |
-                            <a href="/delete_user_info/{{ user.id }}"><button><i class="fas fa-trash-alt"></i></button></a>
+                           <button onclick="trashUserInfo('{{ user.id }}');"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -88,6 +88,92 @@
                 $('#formId').attr('action', '/update_user_info');
                 $(".update").text("Update");
             });
+
+        //    Create user & update
+            function createUser(){
+                let checkFromType = $(".update").text();
+                let email = $("#email").val();
+                let password = $("#password").val();
+
+
+                if (email != "" && password != ""){
+                    if(checkFromType === "Update"){
+                        let userID = $("#userID").val();
+                        $.ajax({
+                            type:"POST",
+                            dataType:"json",
+                            url: "/update_user_info",
+                            data: { email: email, password: password, userID : userID},
+                            success: function(data) {
+                                console.log("i'm here--------"+data.message);
+                                let r = confirm(data.message);
+                                if (r == true) {
+                                    location.reload();
+                                } else {
+                                    location.reload();
+                                }
+                                // swal(data.message, "Thank You...!", "success");
+                            },
+                            error: function(data) {
+                                let message = 'Ops! Something went wrong.....!';
+                                alert(message);
+                            },
+                        });
+                    }else {
+                        $.ajax({
+                            type:"POST",
+                            dataType:"json",
+                            url: "/create_user",
+                            data: { email: email, password: password},
+                            success: function(data) {
+                                console.log("i'm here--------"+data.message);
+                                let r = confirm(data.message);
+                                if (r == true) {
+                                    location.reload();
+                                } else {
+                                    location.reload();
+                                }
+                                // swal(data.message, "Thank You...!", "success");
+                            },
+                            error: function(data) {
+                                let message = 'Ops! Something went wrong.....!';
+                                alert(message);
+                            },
+                        });
+                    }
+                }else{
+                    alert("Please fill the form and try again...!");
+                }
+
+            }
+            // delte user info
+            function trashUserInfo($id){
+                console.log($id);
+                let id = $id;
+                if (id !=""){
+                    $.ajax({
+                        type:"get",
+                        dataType:"json",
+                        url: "/delete_user_info/"+id,
+                        success: function(data) {
+                            console.log("i'm here--------"+data.message);
+                            let r = confirm(data.message);
+                            if (r == true) {
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
+                            // swal(data.message, "Thank You...!", "success");
+                        },
+                        error: function(data) {
+                            let message = 'Ops! Something went wrong.....!';
+                            alert(message);
+                        },
+                    });
+                }else{
+                    alert("Denied! sometthing went wrong please try again later...")
+                }
+            }
         </script>
     {% endblock %}
 {% endblock %}

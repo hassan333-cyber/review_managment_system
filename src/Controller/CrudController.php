@@ -42,10 +42,8 @@ class CrudController extends AbstractController
         // save the info
         $entityManager->persist($user);
         $entityManager->flush();
-        $session = new Session();
-        // set flash messages
-        $session->getFlashBag()->add('notice', 'Added Successfully.....!');
-        return new RedirectResponse($this->urlGenerator->generate('add_user_page'));
+
+        return $this->json(['message' => "Success ! Your user is created."]);
     }
 
     // update user
@@ -72,10 +70,7 @@ class CrudController extends AbstractController
         );
         $entityManager->flush();
 
-        $session = new Session();
-
-        $session->getFlashBag()->add('notice', 'Updated Successfully.....!');
-        return new RedirectResponse($this->urlGenerator->generate('add_user_page'));
+        return $this->json(['message' => "Success ! Your user is updated."]);
     }
 
     // Delete user info
@@ -88,9 +83,6 @@ class CrudController extends AbstractController
         $entityManager->remove($user);
         $entityManager->flush();
 
-        $session = new Session();
-
-        $session->getFlashBag()->add('notice', 'Deleted Successfully.....!');
-        return new RedirectResponse($this->urlGenerator->generate('add_user_page'));
+        return $this->json(['message' => "Success ! Your user is deleted."]);
     }
 }
