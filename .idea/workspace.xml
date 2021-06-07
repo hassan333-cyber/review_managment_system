@@ -171,7 +171,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="Symfony2.SettingsForm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -196,7 +196,7 @@
       <workItem from="1622787814260" duration="689000" />
       <workItem from="1622789147024" duration="34000" />
       <workItem from="1622789191327" duration="12418000" />
-      <workItem from="1622806627576" duration="5110000" />
+      <workItem from="1622806627576" duration="8433000" />
     </task>
     <servers />
   </component>
